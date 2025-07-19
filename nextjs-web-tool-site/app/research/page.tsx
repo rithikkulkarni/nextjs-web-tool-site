@@ -30,7 +30,7 @@ export default function Research() {
           <header>
             <div className="inner">
               <h2>Research</h2>
-              <p>How does this YouTube Video Classifier work?</p>
+              <p>How does this tool work?</p>
             </div>
           </header>
 
@@ -42,10 +42,10 @@ export default function Research() {
                 <h3 className="major">Psychological Background</h3>
                 <p>
                   The psychological impact of thumbnails and titles plays a
-                  critical role in shaping viewer behavior on&nbsp;YouTube.
+                  critical role in shaping viewer behavior on YouTube.
                   Visual features like brightness, edge density, and color
                   contrast capture attention by leveraging principles of visual
-                  saliency—our brains are hard‑wired to notice high‑contrast or
+                  saliency—our brains are hard-wired to notice high-contrast or
                   detailed areas quickly. Titles, meanwhile, trigger cognitive
                   biases through emotional language, urgency, or curiosity—such
                   as in the use of clickbait phrasing or questions—which tap
@@ -61,7 +61,7 @@ export default function Research() {
                     density and local color contrast, increases the likelihood
                     of gaze fixation in the first few milliseconds.
                   </strong>
-                  <br />– Nuthmann&nbsp;&amp; Henderson, 2010
+                  <br />- Nuthmann & Henderson, 2010
                 </blockquote>
               </section>
 
@@ -84,7 +84,7 @@ export default function Research() {
                     <ul>
                       <li>Sentiment</li>
                       <li>Length</li>
-                      <li>Capitalization / Punctuation</li>
+                      <li>Capitalization / Punctuation</li>
                       <li>Clickbait Score</li>
                       <li>Readability</li>
                     </ul>
@@ -96,7 +96,7 @@ export default function Research() {
                   <code>{`def compute_clickbait_score(text: str) -> float:
     clickbait_words = {
         "amazing", "shocking", "unbelievable", "top", "ultimate", "must",
-        "insane", "you won’t believe", "secret", "revealed", "hack"
+        "insane", "you won't believe", "secret", "revealed", "hack"
     }
     words = text.split()
     clickbait_score = sum(word.lower() in clickbait_words for word in words)
@@ -130,25 +130,26 @@ export default function Research() {
                   The Flesch Reading Ease score is a widely used readability
                   test that evaluates the complexity of English texts. It
                   considers the average sentence length and the average number
-                  of syllables per word to produce a score between 0 and 100,
+                  of syllables per word to produce a score between 0 and 100,
                   where higher scores indicate easier readability.
                 </p>
               </section>
 
-              {/* --- Training Dataset --- */}
+              {/* --- Training Data --- */}
               <section>
-                <h3 className="major">Training Dataset</h3>
+                <h3 className="major">Training Data</h3>
                 <p>
-                  The training dataset consists of over 15 000 YouTube videos
-                  taken from <em>somewhat</em> popular channels that have been
+                  The training data consists of over 100,000 YouTube videos
+                  taken from channels serving a broad variety of genres in each
+                  significant subscriber range that have been
                   judged by human experts to be “reliant on the YouTube
                   algorithm.” This ensures the model learns from content aiming
                   to optimize for virality and engagement rather than content
-                  that performs purely due to an already‑established audience or
+                  that performs purely due to an already-established audience or
                   brand.
                 </p>
 
-                <h4 style={{ textAlign: 'center', width: '100%' }}>
+                {/* <h4 style={{ textAlign: 'center', width: '100%' }}>
                   Training Channels
                 </h4>
 
@@ -208,17 +209,17 @@ export default function Research() {
                       <li>Proko</li>
                     </ul>
                   </div>
-                </div>
+                </div> */}
               </section>
 
               {/* --- Model Architecture --- */}
               <section>
                 <h3 className="major">Model Architecture</h3>
                 <p>
-                  The deployed model powering this web service was trained to
-                  recognize patterns in pre‑publication metadata that correlate
-                  with higher likelihoods of YouTube virality. It leverages a
-                  Random Forest classifier enhanced with&nbsp;SMOTE (Synthetic
+                  The model supporting this tool's insights is trained to
+                  recognize patterns in pre-publication metadata that correlate
+                  with higher likelihoods of content performance. It leverages a
+                  Random Forest classifier enhanced with SMOTE (Synthetic
                   Minority Oversampling Technique) to address class imbalance
                   while focusing on psychologically and behaviorally relevant
                   features.

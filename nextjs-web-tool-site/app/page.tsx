@@ -138,8 +138,7 @@ export default function Home() {
             </div>
             <h2 style={{ textAlign: 'center' }}>YouTube Video Insights Tool</h2>
             <p style={{ textAlign: 'center' }}>
-              Upload your pre-publication YouTube video metadata and leverage
-              this free, content-tailored feedback model to analyze your video!
+              Leverage this free, content-tailored feedback model to analyze your video
             </p>
           </div>
         </section>
