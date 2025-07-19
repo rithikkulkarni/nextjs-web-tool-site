@@ -80,7 +80,7 @@ export default function Home() {
       setLlmMsg('Generating advice…');
       const prompt = buildPrompt({ title, tags, topic, subs, prob: probDec });
       const gemRes = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -95,7 +95,11 @@ export default function Home() {
           }),
         }
       );
-      if (!gemRes.ok) throw new Error('Gemini API error ' + gemRes.status);
+      if (!gemRes.ok) {
+        const errorText = await gemRes.text();
+        console.error('Gemini API error:', gemRes.status, errorText);
+        throw new Error('Gemini API error ' + gemRes.status);
+      }
       const json = await gemRes.json();
       const feedback =
         json.candidates?.[0]?.content?.parts?.[0]?.text ||
