@@ -37,14 +37,14 @@ export default function Home() {
   }) =>
     `You are a seasoned YouTube growth strategist.\n\n` +
     `Here is a prospective video a creator is about to publish.\n` +
-    `• Predicted probability of performing in the top 25 %: ${prob}\n` +
+    `• Predicted probability of performing in the top 25 %: ${prob}\n` +
     `• Channel subscriber count: ${subs}\n` +
     `• Video title: "${title}"\n` +
     `• Tags: ${tags}\n` +
     `• Topic: ${topic}\n\n` +
-    `First, briefly say whether the probability should encourage them to publish as‑is (high), tweak (medium), or rethink (low)…\n\n` +
-    `Then give 3–5 concise, actionable suggestions…\n\n` +
-    `Keep the total answer under 150 words.`;
+    `First, briefly say whether the probability should encourage them to publish as-is (high), tweak (medium), or rethink (low)…\n\n` +
+    `Then give 3-5 concise, actionable suggestions…\n\n` +
+    `Keep the total answer under 150 words.`;
 
   /* ---------------- form submit ---------------- */
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -71,9 +71,9 @@ export default function Home() {
       const { probability } = await mlRes.json();
       const probDec = Number(probability).toFixed(2);
       setApiMsg(
-        `Predicted viral potential: <strong>${(
+        `Predicted viral potential: <strong>${(
           Number(probDec) * 100
-        ).toFixed(1)} %</strong>`
+        ).toFixed(1)} %</strong>`
       );
 
       /* ---- 2) Gemini feedback ---- */
@@ -93,10 +93,10 @@ export default function Home() {
         json.candidates?.[0]?.content?.parts?.[0]?.text ||
         'No feedback generated.';
       setLlmMsg(
-        `<p><em>AI Coach:</em></p><p>${feedback.replace(/\n/g, '<br/>')}</p>`
+        `<p><em>AI Coach:</em></p><p>${feedback.replace(/\n/g, '<br/>')}</p>`
       );
     } catch (err: any) {
-      setApiMsg('Error: ' + err.message);
+      setApiMsg('Error: ' + err.message);
       setLlmMsg('');
     }
   }
@@ -116,7 +116,7 @@ export default function Home() {
         {/* ---------- Header ---------- */}
         <header id="header" className="alt">
           <h1>
-            <Link href="/">Pre‑Publish YT Potential Calculator</Link>
+            <Link href="/">YT Video Insights Tool</Link>
           </h1>
         </header>
 
@@ -136,10 +136,10 @@ export default function Home() {
                 style={{ fontSize: '4.5em' }}
               />
             </div>
-            <h2>Pre‑Publish YT Potential Calculator</h2>
+            <h2 style={{ textAlign: 'center' }}>YouTube Video Insights Tool</h2>
             <p style={{ textAlign: 'center' }}>
-              Upload your pre‑publication YouTube video metadata and leverage
-              this free, content‑tailored model to judge your video!
+              Upload your pre-publication YouTube video metadata and leverage
+              this free, content-tailored feedback model to analyze your video!
             </p>
           </div>
         </section>
@@ -158,12 +158,11 @@ export default function Home() {
               </a>
               <div className="content">
                 <h2 className="major">
-                  Want to understand the research behind this model?
+                  Want to understand the research behind this tool?
                 </h2>
                 <p>
-                  Trained on over 15 000 YouTube videos, this model is built on
-                  state‑of‑the‑art techniques in image & NLP combined with a
-                  classic ML pipeline…
+                  Trained on over 100,000 YouTube videos, this model is built on state-of-the-art techniques 
+                  in natural language & image processing combined with a classic machine learning pipeline.
                 </p>
                 <Link href="/research" className="special">
                   Learn more
@@ -178,8 +177,9 @@ export default function Home() {
               <div className="content">
                 <h2 className="major">Disclaimer</h2>
                 <p>
-                  This prediction is only an estimate and may not match actual
-                  video performance. This tool is meant as a guideline…
+                  This analysis is only a suggestion and may not always improve video performance. 
+                  This tool is meant as a guideline to advise creators when promoting content, 
+                  but it may not catch all potential hits.
                 </p>
               </div>
             </div>
@@ -189,10 +189,10 @@ export default function Home() {
         {/* ---------- Footer / Form ---------- */}
         <section id="footer">
           <div className="inner">
-            <h2 className="major">Judge your video</h2>
+            <h2 className="major">Analyze your video</h2>
             <p>
               Upload your thumbnail image and paste your video metadata below.
-              Click Predict to see your video&apos;s potential—and get tailored
+              Click 'Analyze' to see your video&apos;s potential and get tailored
               suggestions.
             </p>
 
@@ -206,13 +206,40 @@ export default function Home() {
               <div className="fields">
                 <div className="field">
                   <label htmlFor="thumbnail">Thumbnail Image</label>
-                  <input
-                    type="file"
-                    name="thumbnail"
-                    id="thumbnail"
-                    accept="image/*"
-                    required
-                  />
+                  <label
+                    htmlFor="thumbnail"
+                    className="file-upload-btn"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.75em 1.5em',
+                      background: '#eee',
+                      color: '#222',
+                      borderRadius: '6px',
+                      border: '2px solid #ccc',
+                      cursor: 'pointer',
+                      fontWeight: 600,
+                      marginTop: '0.5em',
+                      marginBottom: '0.5em',
+                      transition: 'background 0.2s, border-color 0.2s',
+                    }}
+                    onMouseOver={e => (e.currentTarget.style.background = '#f8fafc')}
+                    onMouseOut={e => (e.currentTarget.style.background = '#eee')}
+                  >
+                    <span>
+                      <i className="fas fa-upload" style={{ marginRight: '0.5em' }} />
+                      Browse...
+                    </span>
+                    <input
+                      type="file"
+                      name="thumbnail"
+                      id="thumbnail"
+                      accept="image/*"
+                      required
+                      style={{
+                        display: 'none',
+                      }}
+                    />
+                  </label>
                 </div>
                 <div className="field">
                   <label htmlFor="title">Title</label>
@@ -225,7 +252,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="field">
-                  <label htmlFor="tags">Tags (comma‑separated)</label>
+                  <label htmlFor="tags">Tags (comma-separated)</label>
                   <input
                     type="text"
                     name="tags"
@@ -240,12 +267,12 @@ export default function Home() {
                     type="text"
                     name="topic"
                     id="topic"
-                    placeholder="e.g. Personal Finance, Clash Royale"
+                    placeholder="e.g. Personal Finance, Clash Royale"
                     required
                   />
                 </div>
                 <div className="field">
-                  <label htmlFor="subscriber-count">Subscriber Count</label>
+                  <label htmlFor="subscriber-count">Subscriber Count</label>
                   <input
                     type="number"
                     name="subscriber-count"
@@ -260,7 +287,7 @@ export default function Home() {
               <ul className="actions">
                 <li>
                   <button type="submit" className="primary">
-                    Predict
+                    Analyze
                   </button>
                 </li>
               </ul>
@@ -283,7 +310,7 @@ export default function Home() {
             )}
 
             <ul className="copyright">
-              <li>© Rithik Kulkarni. All rights reserved.</li>
+              <li>© Rithik Kulkarni. All rights reserved.</li>
             </ul>
           </div>
         </section>
