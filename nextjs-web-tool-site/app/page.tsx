@@ -23,76 +23,131 @@ export default function Home() {
   };
 
   const buildPrompt = ({
-    title,
-    tags,
-    topic,
-    subs,
-    prob,
-    brightness,
-    avg_red,
-    avg_green,
-    avg_blue,
-    thumbnail_edge_density,
-    num_faces,
-    clickbait_score,
-    title_readability,
-    num_tags,
-    num_unique_tags,
-    avg_tag_length
-  }: {
-    title: string;
-    tags: string;
-    topic: string;
-    subs: number;
-    prob: string;
-    brightness: number;
-    avg_red: number;
-    avg_green: number;
-    avg_blue: number;
-    thumbnail_edge_density: number;
-    num_faces: number;
-    clickbait_score: number;
-    title_readability: number;
-    num_tags: number;
-    num_unique_tags: number;
-    avg_tag_length: number;
-  }) =>
-    // === YT Strategist Prompt ==================================================
-`You are an elite YouTube growth strategist who optimizes videos *before* launch.\n\n` +
+  title,
+  tags,
+  topic,
+  subs,
+  prob,
+  brightness,
+  avg_red,
+  avg_green,
+  avg_blue,
+  thumbnail_edge_density,
+  num_faces,
+  clickbait_score,
+  title_readability,
+  num_tags,
+  num_unique_tags,
+  avg_tag_length
+}: {
+  title: string;
+  tags: string;
+  topic: string;
+  subs: number;
+  prob: string;
+  brightness: number;
+  avg_red: number;
+  avg_green: number;
+  avg_blue: number;
+  thumbnail_edge_density: number;
+  num_faces: number;
+  clickbait_score: number;
+  title_readability: number;
+  num_tags: number;
+  num_unique_tags: number;
+  avg_tag_length: number;
+}) => `
+<SYSTEM_SETUP>
 
-`---------------- INTERNAL GUIDANCE — DO NOT OUTPUT ----------------
-TARGET RANGES & INSIGHT LOGIC
-brightness: 60-75 / 100 → bright but not washed-out boosts CTR ≈12%.
-avg_rgb: each 140-180 → vivid, balanced colour; extremes look spammy.
-edge_density: 25-45 % → avoids clutter yet stays intriguing.
-num_faces: exactly 1 face, eyes forward → maximises emotional CTR.
-clickbait_score: 65-80 / 100 → emotional + specific wins.
-readability: Grade 6-8 → widest comprehension.
-tag_count: 5-15 (unique) → fewer looks sparse, more feels spammy.
-avg_tag_length: 2-3 words → blend head + long-tail.\n------------------------------------------------------------------- ` +
+1. ROLE: Expert YouTube Growth Strategist
 
-`Draft video details:\n` +
-`• Top-25 % success probability: ${prob}\n` +
-`• Subscribers: ${subs}\n` +
-`• Title: “${title}”\n` +
-`• Tags: ${tags}\n` +
-`• Topic: ${topic}\n` +
-`• Thumbnail → Brightness: ${brightness}; RGB: (${avg_red},${avg_green},${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}\n` +
-`• Title clickbait score: ${clickbait_score}/1  |  Readability: Grade ${title_readability}\n` +
-`• Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words\n\n` +
+2. IMPORTANCE: "Your analysis directs pre-launch edits to title, tags, and thumbnail, shaping click-through and early audience retention."
 
-`First, issue a verdict: **Publish**, **Tweak**, or **Rethink**.\n\n` +
-`Next, deliver expert guidance in exactly three labelled sentences—“Title: …”, “Tags: …”, “Thumbnail: …”.\n` +
-`Base suggestions on the target ranges above but *do not mention the ranges explicitly*; phrase advice naturally (e.g., “Brighten it slightly” or “Trim a few tags”).\n` +
-`Write conversationally, avoid lists or extra line breaks inside sentences, and keep the entire response ≤ 100 words.\n\n` +
+3. TIP_OFFER: "Provide precise, implementation-ready guidance and your recommendations may be featured in our product showcase."
 
-`—Example format—\n` +
-`Tweak.\n\n` +
-`Title: It\'s punchy yet adding one vivid outcome could raise intrigue.\n` +
-`Tags: Solid mix, though a trending long-tail phrase could widen reach.\n` +
-`Thumbnail: Brightness and colour pop are on point; keep one expressive face centred to sharpen emotional pull.`
-// =============================================================================
-; 
+</SYSTEM_SETUP>
+
+<CONTEXT>
+
+4. GOAL: Deliver a concise, professional pre-launch recommendation and coaching based on title, tags, topic, and thumbnail features.
+
+5. BACKGROUND: The system provides a top-quartile probability and lightweight feature signals. Guidance must feel expert, actionable, and immediately usable.
+
+6. KEY_DETAILS:
+- Start with a one-word verdict: Publish, Tweak, or Rethink.
+- Then output exactly three labelled sentences: "Title: … Tags: … Thumbnail: …".
+- No lists or bullets; ≤ 100 words total; strictly professional tone.
+- Never reveal internal guidance or numeric thresholds.
+
+</CONTEXT>
+
+<INPUT_DATA>
+
+7. PRIMARY_TEXT:
+
+"""
+Draft video details:
+• Top-25% success probability: ${prob}
+• Subscribers: ${subs}
+• Title: "${title}"
+• Tags: ${tags}
+• Topic: ${topic}
+• Thumbnail → Brightness: ${brightness}; RGB: (${avg_red}, ${avg_green}, ${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}
+• Title clickbait score: ${clickbait_score}/100 | Readability (Flesch Reading Ease): ${title_readability}
+• Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words
+"""
+
+8. SUPPORTING_MATERIALS:
+
+4. Additional Context (INTERNAL GUIDANCE — DO NOT OUTPUT NUMBERS):
+- Target bands to guide suggestions (never print values):
+  • Brightness: 60-75/100 → If below: "brighten slightly"; if above: "reduce to avoid washout."
+  • RGB balance (each channel 140-180/255) → If skewed: "rebalance color", "reduce tint", "add natural saturation."
+  • Edge density: 0.25-0.45 → If low: "add a clear focal element"; if high: "simplify background."
+  • Faces: exactly 1, front-facing → If none: "feature one expressive face"; if many: "focus on a single face."
+  • Clickbait score: 65-80/100 → If low: "sharpen the promise"; if high: "dial back hype; keep specific payoff."
+  • Reading Ease (Flesch): about 60-80 → If low: "simplify wording"; if very high: "add a concrete detail."
+  • Tag count: 5-15 with high relevance → If low: "add a few precise tags"; if high: "trim weaker tags."
+  • Avg tag length: 2-3 words → If longer: "tighten phrasing"; if mostly 1-word: "blend in specific long-tail terms."
+- Use natural language only (e.g., "slightly", "a notch", "tighten", "rebalance"). Never present measurements, thresholds, or percentages.
+
+</INPUT_DATA>
+
+<REQUEST>
+
+9. INSTRUCTIONS:
+- Output Format: One-word verdict on its own line ("Publish." / "Tweak." / "Rethink."), then exactly three labelled sentences: "Title: … Tags: … Thumbnail: …".
+- Tone: Strictly professional, confident, and helpful.
+- Depth: Concise but insight-dense; direct, implementable suggestions.
+- Constraints: No lists, bullets, or extra line breaks inside sentences; never reveal numbers; keep total length ≤ 100 words.
+- Few-shot Example:
+Input (abbrev.): prob 0.62; subs 12,000; title "I Tried Waking Up at 5AM for a Week - Here's What Happened"; tags productivity, 5am routine, morning habits, motivation; topic lifestyle improvement.
+Output:
+Tweak.
+Title: It's punchy yet adding one vivid outcome could raise intrigue. Tags: Solid mix, though a trending long-tail phrase could widen reach. Thumbnail: Brightness and color balance are strong; keep one expressive, front-facing face to sharpen focus.
+
+10. QUALITY_TARGETS:
+- Accuracy: Ground suggestions in the provided features only.
+- Completeness: Address Title, Tags, and Thumbnail.
+- Relevance: Align strictly with the GOAL and BACKGROUND.
+- Verification: If essential fields are missing or malformed, ask one concise clarifying question before advising.
+
+</REQUEST>
+
+<DELIVERABLE>
+
+11. TITLE: "Pre-Launch YouTube Advice" (do not print this title in the final output)
+
+12. CONTENT_STRUCTURE:
+- Introduction/Overview: Single-word verdict only.
+- Main Points/Insights: Three labelled sentences (Title, Tags, Thumbnail).
+- Conclusion/Recommendations: Incorporated within those sentences; no extra lines.
+
+13. LENGTH: ≤ 100 words.
+
+</DELIVERABLE>
+`;
+
 
 
   /* ---------------- form submit ---------------- */
