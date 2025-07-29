@@ -117,7 +117,20 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
         { method: 'POST', body: fd }
       );
       if (!mlRes.ok) throw new Error('Model API error ' + mlRes.status);
-      const { probability } = await mlRes.json();
+      const {
+        probability,
+        brightness,
+        avg_red,
+        avg_green,
+        avg_blue,
+        thumbnail_edge_density,
+        num_faces,
+        clickbait_score,
+        title_readability,
+        num_tags,
+        num_unique_tags,
+        avg_tag_length,
+      } = await mlRes.json();
       const probDec = Number(probability).toFixed(2);
       setApiMsg(
         `Predicted viral potential: <strong>${(
@@ -127,7 +140,24 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
 
       /* ---- 2) Gemini feedback ---- */
       setLlmMsg('Generating advice…');
-      const prompt = buildPrompt({ title, tags, topic, subs, prob: probDec });
+      const prompt = buildPrompt({
+        title,
+        tags,
+        topic,
+        subs,
+        prob: probability.toFixed(2), 
+        brightness,
+        avg_red,
+        avg_green,
+        avg_blue,
+        thumbnail_edge_density,
+        num_faces,
+        clickbait_score,
+        title_readability,
+        num_tags,
+        num_unique_tags,
+        avg_tag_length,
+      });
       const gemRes = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${process.env.NEXT_PUBLIC_GEMINI_API_KEY}`,
         {
