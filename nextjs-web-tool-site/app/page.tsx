@@ -35,16 +35,25 @@ export default function Home() {
     subs: number;
     prob: string;
   }) =>
-    `You are a seasoned YouTube growth strategist.\n\n` +
-    `Here is a prospective video a creator is about to publish.\n` +
-    `• Predicted probability of performing in the top 25 %: ${prob}\n` +
+    `You are a seasoned YouTube growth strategist advising creators on how to optimize videos *before* they go live.\n\n` +
+    `Here is a draft video concept:\n` +
+    `• Predicted probability of reaching top 25% performance: ${prob}\n` +
     `• Channel subscriber count: ${subs}\n` +
-    `• Video title: "${title}"\n` +
+    `• Title: "${title}"\n` +
     `• Tags: ${tags}\n` +
     `• Topic: ${topic}\n\n` +
-    `First, briefly say whether the probability should encourage them to publish as-is (high), tweak (medium), or rethink (low)…\n\n` +
-    `Then give 3-5 concise, actionable suggestions…\n\n` +
-    `Keep the total answer under 150 words.`;
+    `Based only on the title, tags, topic, and thumbnail (already reviewed), briefly say whether the creator should publish as-is, tweak and improve, or fully rethink.\n\n` +
+    `Then, in no more than 100 words, share clear, expert-level advice in a natural tone that feels like it's coming from a trusted strategist. Do not use lists or bullet points. Make it conversational, insightful, and easy to read.\n\n` +
+    `Follow this example format exactly:\n\n` +
+    `Input:\n` +
+    `• Predicted probability of reaching top 25% performance: 0.62\n` +
+    `• Channel subscriber count: 12,000\n` +
+    `• Title: "I Tried Waking Up at 5AM for a Week - Here's What Happened"\n` +
+    `• Tags: productivity, 5am routine, morning habits, motivation\n` +
+    `• Topic: lifestyle improvement\n\n` +
+    `Output:\n` +
+    `Your predicted performance is promising, so I'd recommend moving forward with some light tweaks. The title is clickable but feels a bit saturated—consider hinting at a surprising takeaway or emotion to make it stand out. The tags are relevant, though adding something trend-driven could help expand reach. If the thumbnail clearly shows contrast—like you looking tired vs. energized—it’ll complement the narrative well. Make sure the intro sets a strong hook within seconds, and lean into any personal transformation to deepen viewer interest. With a few refinements, this could perform very well for your audience.`; 
+
 
   /* ---------------- form submit ---------------- */
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
