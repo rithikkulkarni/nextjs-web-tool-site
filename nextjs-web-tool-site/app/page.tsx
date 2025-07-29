@@ -28,24 +28,71 @@ export default function Home() {
     topic,
     subs,
     prob,
+    brightness,
+    avg_red,
+    avg_green,
+    avg_blue,
+    thumbnail_edge_density,
+    num_faces,
+    clickbait_score,
+    title_readability,
+    num_tags,
+    num_unique_tags,
+    avg_tag_length
   }: {
     title: string;
     tags: string;
     topic: string;
     subs: number;
     prob: string;
+    brightness: number;
+    avg_red: number;
+    avg_green: number;
+    avg_blue: number;
+    thumbnail_edge_density: number;
+    num_faces: number;
+    clickbait_score: number;
+    title_readability: number;
+    num_tags: number;
+    num_unique_tags: number;
+    avg_tag_length: number;
   }) =>
-    `You are a seasoned YouTube growth strategist advising creators on how to optimize videos *before* they go live.\n\n` +
-    `Here is a draft video concept:\n` +
-    `• Predicted probability of reaching top 25% performance: ${prob}\n` +
-    `• Channel subscriber count: ${subs}\n` +
-    `• Title: "${title}"\n` +
-    `• Tags: ${tags}\n` +
-    `• Topic: ${topic}\n\n` +
-    `Based only on the title, tags, topic, and thumbnail (already reviewed), briefly say whether the creator should publish as-is, tweak and improve, or fully rethink.\n\n` +
-    `Then, in no more than 100 words, share clear, expert-level advice in a natural tone that feels like it's coming from a trusted strategist. Do not use lists or bullet points. Make it conversational, insightful, and easy to read.\n\n` +
-    `Follow this example format exactly:\n\n` +
-    `Your predicted performance is promising, so I'd recommend moving forward with some light tweaks. The title is clickable but feels a bit saturated—consider hinting at a surprising takeaway or emotion to make it stand out. The tags are relevant, though adding something trend-driven could help expand reach. If the thumbnail clearly shows contrast—like you looking tired vs. energized—it’ll complement the narrative well. Make sure the intro sets a strong hook within seconds, and lean into any personal transformation to deepen viewer interest. With a few refinements, this could perform very well for your audience.`; 
+    // === YT Strategist Prompt ==================================================
+`You are an elite YouTube growth strategist who optimizes videos *before* launch.\n\n` +
+
+/* ---------------- INTERNAL GUIDANCE — DO NOT OUTPUT ----------------
+TARGET RANGES & INSIGHT LOGIC
+brightness: 60–75 / 100 → bright but not washed‑out boosts CTR ≈12 %.
+avg_rgb: each 140–180 → vivid, balanced colour; extremes look spammy.
+edge_density: 25–45 % → avoids clutter yet stays intriguing.
+num_faces: exactly 1 face, eyes forward → maximises emotional CTR.
+clickbait_score: 65–80 / 100 → emotional + specific wins.
+readability: Grade 6–8 → widest comprehension.
+tag_count: 5–15 (unique) → fewer looks sparse, more feels spammy.
+avg_tag_length: 2–3 words → blend head + long‑tail.\n------------------------------------------------------------------- */ +
+
+`Draft video details:\n` +
+`• Top‑25 % success probability: ${prob}\n` +
+`• Subscribers: ${subs}\n` +
+`• Title: “${title}”\n` +
+`• Tags: ${tags}\n` +
+`• Topic: ${topic}\n` +
+`• Thumbnail → Brightness: ${brightness}; RGB: (${avg_red},${avg_green},${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}\n` +
+`• Title clickbait score: ${clickbait_score}/1  |  Readability: Grade ${title_readability}\n` +
+`• Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words\n\n` +
+
+`First, issue a verdict: **Publish**, **Tweak**, or **Rethink**.\n\n` +
+`Next, deliver expert guidance in exactly three labelled sentences—“Title: …”, “Tags: …”, “Thumbnail: …”.\n` +
+`Base suggestions on the target ranges above but *do not mention the ranges explicitly*; phrase advice naturally (e.g., “Brighten it slightly” or “Trim a few tags”).\n` +
+`Write conversationally, avoid lists or extra line breaks inside sentences, and keep the entire response ≤ 100 words.\n\n` +
+
+`—Example format—\n` +
+`Tweak.\n\n` +
+`Title: It’s punchy yet adding one vivid outcome could raise intrigue.\n` +
+`Tags: Solid mix, though a trending long‑tail phrase could widen reach.\n` +
+`Thumbnail: Brightness and colour pop are on point; keep one expressive face centred to sharpen emotional pull.`
+// =============================================================================
+; 
 
 
   /* ---------------- form submit ---------------- */
