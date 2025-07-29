@@ -70,13 +70,12 @@ export default function Home() {
 
 <CONTEXT>
 
-4. GOAL: Deliver a concise, professional pre-launch recommendation and coaching based on title, tags, topic, and thumbnail features.
+4. GOAL: Deliver concise, professional pre-launch coaching based on title, tags, topic, and thumbnail features.
 
-5. BACKGROUND: The system provides a top-quartile probability and lightweight feature signals. Guidance must feel expert, actionable, and immediately usable.
+5. BACKGROUND: The system provides a top-quartile probability and lightweight feature signals. Guidance must be actionable and immediately usable.
 
 6. KEY_DETAILS:
-- Start with a one-word verdict: Publish, Tweak, or Rethink.
-- Then output exactly three labelled sentences: "Title: … Tags: … Thumbnail: …".
+- Do not output a verdict. Provide only three labelled sentences: "Title: … Tags: … Thumbnail: …".
 - No lists or bullets; ≤ 100 words total; strictly professional tone.
 - Never reveal internal guidance or numeric thresholds.
 
@@ -86,6 +85,7 @@ export default function Home() {
 
 7. PRIMARY_TEXT:
 
+"""
 Draft video details:
 • Top-25% success probability: ${prob}
 • Subscribers: ${subs}
@@ -95,6 +95,7 @@ Draft video details:
 • Thumbnail → Brightness: ${brightness}; RGB: (${avg_red}, ${avg_green}, ${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}
 • Title clickbait score: ${clickbait_score}/100 | Readability (Flesch Reading Ease): ${title_readability}
 • Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words
+"""
 
 8. SUPPORTING_MATERIALS:
 
@@ -105,7 +106,7 @@ Draft video details:
   • Edge density: 0.25-0.45 → If low: "add a clear focal element"; if high: "simplify background."
   • Faces: exactly 1, front-facing → If none: "feature one expressive face"; if many: "focus on a single face."
   • Clickbait score: 65-80/100 → If low: "sharpen the promise"; if high: "dial back hype; keep specific payoff."
-  • Reading Ease (Flesch): about 60-80 → If low: "simplify wording"; if very high: "add a concrete detail."
+  • Reading Ease (Flesch): ~60-80 → If low: "simplify wording"; if very high: "add a concrete detail."
   • Tag count: 5-15 with high relevance → If low: "add a few precise tags"; if high: "trim weaker tags."
   • Avg tag length: 2-3 words → If longer: "tighten phrasing"; if mostly 1-word: "blend in specific long-tail terms."
 - Use natural language only (e.g., "slightly", "a notch", "tighten", "rebalance"). Never present measurements, thresholds, or percentages.
@@ -115,14 +116,12 @@ Draft video details:
 <REQUEST>
 
 9. INSTRUCTIONS:
-- Output Format: One-word verdict on its own line ("Publish." / "Tweak." / "Rethink."), then exactly three labelled sentences: "Title: … Tags: … Thumbnail: …".
+- Output Format: Exactly three labelled sentences: "Title: … \nTags: … \nThumbnail: …".
 - Tone: Strictly professional, confident, and helpful.
 - Depth: Concise but insight-dense; direct, implementable suggestions.
 - Constraints: No lists, bullets, or extra line breaks inside sentences; never reveal numbers; keep total length ≤ 100 words.
 - Few-shot Example:
-Input (abbrev.): prob 0.62; subs 12,000; title "I Tried Waking Up at 5AM for a Week - Here's What Happened"; tags productivity, 5am routine, morning habits, motivation; topic lifestyle improvement.
 Output:
-Tweak.
 Title: It's punchy yet adding one vivid outcome could raise intrigue. Tags: Solid mix, though a trending long-tail phrase could widen reach. Thumbnail: Brightness and color balance are strong; keep one expressive, front-facing face to sharpen focus.
 
 10. QUALITY_TARGETS:
@@ -138,14 +137,14 @@ Title: It's punchy yet adding one vivid outcome could raise intrigue. Tags: Soli
 11. TITLE: "Pre-Launch YouTube Advice" (do not print this title in the final output)
 
 12. CONTENT_STRUCTURE:
-- Introduction/Overview: Single-word verdict only.
-- Main Points/Insights: Three labelled sentences (Title, Tags, Thumbnail).
-- Conclusion/Recommendations: Incorporated within those sentences; no extra lines.
+- Main Points/Insights: Three labelled sentences (Title, Tags, Thumbnail) only.
+- No introduction or conclusion.
 
 13. LENGTH: ≤ 100 words.
 
 </DELIVERABLE>
 `;
+
 
 
 
