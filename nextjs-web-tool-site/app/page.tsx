@@ -86,7 +86,6 @@ export default function Home() {
 
 7. PRIMARY_TEXT:
 
-"""
 Draft video details:
 • Top-25% success probability: ${prob}
 • Subscribers: ${subs}
@@ -96,7 +95,6 @@ Draft video details:
 • Thumbnail → Brightness: ${brightness}; RGB: (${avg_red}, ${avg_green}, ${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}
 • Title clickbait score: ${clickbait_score}/100 | Readability (Flesch Reading Ease): ${title_readability}
 • Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words
-"""
 
 8. SUPPORTING_MATERIALS:
 
