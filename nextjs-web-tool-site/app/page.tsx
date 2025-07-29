@@ -133,7 +133,7 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
       } = await mlRes.json();
       const probDec = Number(probability).toFixed(2);
       setApiMsg(
-        `Predicted viral potential: <strong>${(
+        `Probability of high performance: <strong>${(
           Number(probDec) * 100
         ).toFixed(1)} %</strong>`
       );
@@ -252,7 +252,7 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
                 </h2>
                 <p>
                   Trained on over 100,000 YouTube videos, this model is built on state-of-the-art techniques 
-                  in natural language & image processing combined with a classic machine learning pipeline.
+                  in natural language & image processing.
                 </p>
                 <Link href="/research" className="special">
                   Learn more
@@ -400,7 +400,7 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
             )}
 
             <ul className="copyright">
-              <li>© Rithik Kulkarni. All rights reserved.</li>
+              <li>© Rithik Kulkarni & Ethan Goodman. All rights reserved.</li>
             </ul>
           </div>
         </section>

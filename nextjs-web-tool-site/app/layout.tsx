@@ -5,8 +5,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '🎞️ YouTube Classifier',
-  description: 'Pre‑Publish YT Potential Calculator',
+  title: 'Insights',
+  description: 'YT Insights Tool',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
