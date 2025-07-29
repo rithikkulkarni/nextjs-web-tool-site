@@ -57,7 +57,45 @@ export default function Home() {
   num_tags: number;
   num_unique_tags: number;
   avg_tag_length: number;
-}) => `
+}) => {
+  // ---- helpers to drop undefined/empty/NaN values ----
+  const isDef = (v: any) =>
+    !(v === undefined || v === null || (typeof v === 'number' && Number.isNaN(v)));
+  const isStr = (s: any) => typeof s === 'string' && s.trim().length > 0;
+
+  // ---- build PRIMARY_TEXT lines conditionally ----
+  const lines: string[] = [];
+  lines.push('Draft video details:');
+  if (isDef(prob)) lines.push(`• Top-25% success probability: ${prob}`);
+  if (isDef(subs)) lines.push(`• Subscribers: ${subs}`);
+  if (isStr(title)) lines.push(`• Title: "${title}"`);
+  if (isStr(tags)) lines.push(`• Tags: ${tags}`);
+  if (isStr(topic)) lines.push(`• Topic: ${topic}`);
+
+  const thumbParts: string[] = [];
+  if (isDef(brightness)) thumbParts.push(`Brightness: ${brightness}`);
+  if (isDef(avg_red) && isDef(avg_green) && isDef(avg_blue))
+    thumbParts.push(`RGB: (${avg_red}, ${avg_green}, ${avg_blue})`);
+  if (isDef(thumbnail_edge_density)) thumbParts.push(`Edge density: ${thumbnail_edge_density}`);
+  if (isDef(num_faces)) thumbParts.push(`Faces: ${num_faces}`);
+  if (thumbParts.length) lines.push(`• Thumbnail → ${thumbParts.join('; ')}`);
+
+  const titleParts: string[] = [];
+  if (isDef(clickbait_score)) titleParts.push(`Title clickbait score: ${clickbait_score}/100`);
+  if (isDef(title_readability)) titleParts.push(`Readability (Flesch Reading Ease): ${title_readability}`);
+  if (titleParts.length) lines.push(`• ${titleParts.join(' | ')}`);
+
+  const tagParts: string[] = [];
+  if (isDef(num_tags) && isDef(num_unique_tags))
+    tagParts.push(`Tags → Count: ${num_tags} (unique ${num_unique_tags})`);
+  else if (isDef(num_tags)) tagParts.push(`Tags → Count: ${num_tags}`);
+  if (isDef(avg_tag_length)) tagParts.push(`Avg length: ${avg_tag_length} words`);
+  if (tagParts.length) lines.push(`• ${tagParts.join('; ')}`);
+
+  const PRIMARY_TEXT = lines.join('\n');
+
+  // ---- prompt template ----
+  return `
 <SYSTEM_SETUP>\n
 1. ROLE: Expert YouTube Growth Strategist\n
 2. IMPORTANCE: "Your analysis directs pre-launch edits to title, tags, and thumbnail, shaping click-through and early audience retention."\n
@@ -68,23 +106,16 @@ export default function Home() {
 4. GOAL: Deliver professional pre-launch coaching based on title, tags, topic, and thumbnail features.\n
 5. BACKGROUND: The system provides a top-quartile probability and lightweight feature signals. Guidance must be actionable, explanatory, and immediately usable by creators.\n
 6. KEY_DETAILS:\n
-- Do not output a verdict. Provide only three labelled sections: "Title:", "Tags:", "Thumbnail:".\n
+- Provide only three labelled sections: "Title:", "Tags:", "Thumbnail:". Do not output a verdict.\n
 - In each section, write 2–4 sentences that BOTH suggest changes AND briefly explain why they matter.\n
-- Include at least one short example in quotes per section (e.g., a sample title rewrite, example tags, or a concrete thumbnail adjustment). Avoid numeric thresholds in the user-facing text.\n
+- Include at least one short example in quotes per section (e.g., a sample title rewrite, example tags, or a concrete thumbnail adjustment). Avoid numeric thresholds in user-facing text.\n
 - Strictly professional tone; no bullets or numbered lists.\n
+- If any field is missing, malformed, or appears as a placeholder (e.g., "undefined", "null", "NaN"), ignore it entirely and do not mention that it is missing.\n
 </CONTEXT>\n
 
 <INPUT_DATA>\n
 7. PRIMARY_TEXT:\n
-Draft video details:\n
-• Top-25% success probability: ${prob}\n
-• Subscribers: ${subs}\n
-• Title: "${title}"\n
-• Tags: ${tags}\n
-• Topic: ${topic}\n
-• Thumbnail → Brightness: ${brightness}; RGB: (${avg_red}, ${avg_green}, ${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}\n
-• Title clickbait score: ${clickbait_score}/100 | Readability (Flesch Reading Ease): ${title_readability}\n
-• Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words\n
+${PRIMARY_TEXT}\n
 
 8. SUPPORTING_MATERIALS:\n
 4. Additional Context (INTERNAL GUIDANCE — DO NOT OUTPUT NUMBERS):\n
@@ -93,9 +124,9 @@ Draft video details:\n
   • RGB balance: If skewed → "rebalance color", "reduce tint", "add natural saturation."\n
   • Edge density: If low → "add a clear focal element"; if high → "simplify background."\n
   • Faces: Prefer a single, front-facing face → If none → "feature one expressive face"; if many → "focus on a single face."\n
-  • Clickbait score: If low → "sharpen the promise with a specific outcome"; if high → "dial back hype; keep a concrete payoff."\n
+  • Clickbait tone: If weak → "sharpen the promise with a specific outcome"; if extreme → "dial back hype; keep a concrete payoff."\n
   • Reading Ease: If low → "simplify wording"; if very high → "add a concrete detail for substance."\n
-  • Tag count & phrasing: If sparse → "add a few precise, intent-matching tags"; if bloated → "trim weaker or redundant tags"; keep tags short and scannable; blend broad + long-tail.\n
+  • Tags: If sparse → "add a few precise, intent-matching tags"; if bloated → "trim weaker or redundant tags"; keep tags short and scannable; blend broad + long-tail.\n
 - Use natural, non-numeric directives only.\n
 </INPUT_DATA>\n
 
@@ -104,7 +135,7 @@ Draft video details:\n
 - Output Format: Three labelled sections only, in this order and on separate lines: "Title: …" then "Tags: …" then "Thumbnail: …". Each section should have 2–4 sentences, with at least one quoted example.\n
 - Tone: Strictly professional, clear, and encouraging.\n
 - Depth: Explanatory and example-driven; teach the user what to change and why.\n
-- Constraints: No lists or bullets; never reveal numbers or thresholds; avoid jargon; keep total length between 130 and 220 words.\n
+- Constraints: No lists or bullets; never reveal numbers or thresholds; avoid jargon; keep total length between 130 and 220 words; ignore any missing inputs.\n
 - Few-shot Example (style only):\n
 Title: Clarify the payoff and lead with the outcome; try a version like "From Burnout to Deep Focus in One Week" to make the benefit explicit and easy to scan. Explain briefly why this change helps curiosity without overselling.\n
 Tags: Replace vague terms with intent-matching phrases like "morning routine for beginners" or "focus habits that stick" to align with search language and surface relevance.\n
@@ -114,7 +145,7 @@ Thumbnail: Feature one expressive, front-facing face and increase subject-backgr
 - Accuracy: Ground suggestions in the provided features only.\n
 - Completeness: Address Title, Tags, and Thumbnail with concrete examples and reasons.\n
 - Relevance: Align strictly with the GOAL and BACKGROUND.\n
-- Verification: If essential fields are missing or malformed, ask one concise clarifying question before advising.\n
+- Verification: If essential fields are missing or malformed, ask one concise clarifying question **only if** it blocks giving useful advice; otherwise proceed and ignore missing items.\n
 </REQUEST>\n
 
 <DELIVERABLE>\n
@@ -125,6 +156,7 @@ Thumbnail: Feature one expressive, front-facing face and increase subject-backgr
 13. LENGTH: 130–220 words total.\n
 </DELIVERABLE>
 `;
+};
 
 
 
