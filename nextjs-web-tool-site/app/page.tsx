@@ -60,25 +60,25 @@ export default function Home() {
     // === YT Strategist Prompt ==================================================
 `You are an elite YouTube growth strategist who optimizes videos *before* launch.\n\n` +
 
-/* ---------------- INTERNAL GUIDANCE — DO NOT OUTPUT ----------------
-TARGET RANGES & INSIGHT LOGIC
-brightness: 60–75 / 100 → bright but not washed‑out boosts CTR ≈12 %.
-avg_rgb: each 140–180 → vivid, balanced colour; extremes look spammy.
-edge_density: 25–45 % → avoids clutter yet stays intriguing.
+`---------------- INTERNAL GUIDANCE — DO NOT OUTPUT ----------------
+TARGET RANGES & INSIGHT LOGIC
+brightness: 60-75 / 100 → bright but not washed-out boosts CTR ≈12%.
+avg_rgb: each 140-180 → vivid, balanced colour; extremes look spammy.
+edge_density: 25-45 % → avoids clutter yet stays intriguing.
 num_faces: exactly 1 face, eyes forward → maximises emotional CTR.
-clickbait_score: 65–80 / 100 → emotional + specific wins.
-readability: Grade 6–8 → widest comprehension.
-tag_count: 5–15 (unique) → fewer looks sparse, more feels spammy.
-avg_tag_length: 2–3 words → blend head + long‑tail.\n------------------------------------------------------------------- */ +
+clickbait_score: 65-80 / 100 → emotional + specific wins.
+readability: Grade 6-8 → widest comprehension.
+tag_count: 5-15 (unique) → fewer looks sparse, more feels spammy.
+avg_tag_length: 2-3 words → blend head + long-tail.\n------------------------------------------------------------------- ` +
 
 `Draft video details:\n` +
-`• Top‑25 % success probability: ${prob}\n` +
+`• Top-25 % success probability: ${prob}\n` +
 `• Subscribers: ${subs}\n` +
 `• Title: “${title}”\n` +
 `• Tags: ${tags}\n` +
 `• Topic: ${topic}\n` +
 `• Thumbnail → Brightness: ${brightness}; RGB: (${avg_red},${avg_green},${avg_blue}); Edge density: ${thumbnail_edge_density}; Faces: ${num_faces}\n` +
-`• Title clickbait score: ${clickbait_score}/1  |  Readability: Grade ${title_readability}\n` +
+`• Title clickbait score: ${clickbait_score}/1  |  Readability: Grade ${title_readability}\n` +
 `• Tags → Count: ${num_tags} (unique ${num_unique_tags}); Avg length: ${avg_tag_length} words\n\n` +
 
 `First, issue a verdict: **Publish**, **Tweak**, or **Rethink**.\n\n` +
@@ -88,8 +88,8 @@ avg_tag_length: 2–3 words → blend head + long‑tail.\n---------------------
 
 `—Example format—\n` +
 `Tweak.\n\n` +
-`Title: It’s punchy yet adding one vivid outcome could raise intrigue.\n` +
-`Tags: Solid mix, though a trending long‑tail phrase could widen reach.\n` +
+`Title: It\'s punchy yet adding one vivid outcome could raise intrigue.\n` +
+`Tags: Solid mix, though a trending long-tail phrase could widen reach.\n` +
 `Thumbnail: Brightness and colour pop are on point; keep one expressive face centred to sharpen emotional pull.`
 // =============================================================================
 ; 
