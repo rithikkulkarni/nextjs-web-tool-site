@@ -11,6 +11,7 @@ export default function Home() {
   const formRef = useRef<HTMLFormElement>(null);
   const [apiMsg, setApiMsg] = useState('');
   const [llmMsg, setLlmMsg] = useState('');
+  const [thumbnailName, setThumbnailName] = useState<string | null>(null);
 
   /* ---------------- helpers (unchanged) ---------------- */
   const getGroup = (subs: number) => {
@@ -383,8 +384,17 @@ Title: It's punchy yet adding one vivid outcome could raise intrigue. Tags: Soli
                       style={{
                         display: 'none',
                       }}
+                      onChange={e => {
+                        const file = e.target.files?.[0];
+                        setThumbnailName(file ? file.name : null);
+                      }}
                     />
                   </label>
+                  {thumbnailName && (
+                    <span style={{ marginLeft: '1em', color: '#f8fafc', fontWeight: 500 }}>
+                      {thumbnailName}
+                    </span>
+                  )}
                 </div>
                 <div className="field">
                   <label htmlFor="title">Title</label>
